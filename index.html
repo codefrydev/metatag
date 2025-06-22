@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<!-- Primary Meta Tags -->
+  <!-- Primary Meta Tags -->
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>MetaTag - Instant SEO & Social Sharing Tags</title>
@@ -31,8 +31,8 @@
 <meta name="twitter:description" content="Generate perfectly formatted meta tags for SEO, Facebook, LinkedIn, Twitter, and more—instantly copy and paste!" />
 <meta name="twitter:image" content="https://raw.githubusercontent.com/codefrydev/metatag/b492e38d9a48988bc860f2cc1a1cbe5c7a2a1913/MetaTag.svg" />
   
-  <!-- Tailwind CSS CDN -->
   <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   <style>
     @keyframes fadeInUp {
       from { opacity: 0; transform: translateY(20px); }
@@ -52,52 +52,292 @@
       border-radius: 6px;
       border: 1px solid #cbd5e1;
     }
+    .preview-card {
+      transition: all 0.3s ease;
+      box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1);
+    }
+    .preview-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
+    }
+    .tab-button {
+      transition: all 0.3s ease;
+    }
+    .tab-button.active {
+      border-bottom: 3px solid #0ea5e9;
+      color: #0ea5e9;
+      font-weight: 600;
+    }
+    .social-icon {
+      width: 40px;
+      height: 40px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 50%;
+      font-size: 18px;
+    }
+    .copy-notification {
+      position: fixed;
+      top: 20px;
+      right: 20px;
+      opacity: 0;
+      transition: opacity 0.3s ease;
+      z-index: 100;
+    }
+    .copy-notification.show {
+      opacity: 1;
+    }
+    .tag-badge {
+      display: inline-block;
+      background: #dbeafe;
+      color: #1d4ed8;
+      border-radius: 4px;
+      padding: 2px 6px;
+      font-size: 12px;
+      font-weight: 500;
+      margin-right: 4px;
+    }
+    .extracted-meta-table {
+      width: 100%;
+      border-collapse: collapse;
+    }
+    .extracted-meta-table th {
+      background: #f3f4f6;
+      text-align: left;
+      padding: 10px;
+      font-weight: 600;
+      border-bottom: 2px solid #e5e7eb;
+    }
+    .extracted-meta-table td {
+      padding: 10px;
+      border-bottom: 1px solid #e5e7eb;
+      vertical-align: top;
+      word-break: break-all;
+    }
+    .extracted-meta-table tr:hover td {
+      background: #f9fafb;
+    }
+    .loader {
+      border: 4px solid #f3f3f3;
+      border-top: 4px solid #0ea5e9;
+      border-radius: 50%;
+      width: 30px;
+      height: 30px;
+      animation: spin 1s linear infinite;
+      margin: 0 auto;
+    }
+    @keyframes spin {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+    .url-input-container {
+      display: flex;
+      gap: 10px;
+      margin-bottom: 20px;
+    }
+    .url-input-container input {
+      flex: 1;
+      border: 1px solid #d1d5db;
+      border-radius: 12px;
+      padding: 12px 16px;
+      font-size: 16px;
+    }
+    .url-input-container button {
+      background: #0ea5e9;
+      color: white;
+      border: none;
+      border-radius: 12px;
+      padding: 0 24px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: background 0.3s;
+    }
+    .url-input-container button:hover {
+      background: #0284c7;
+    }
   </style>
 </head>
-<body class="bg-gradient-to-br from-cyan-50 to-teal-50 min-h-screen flex items-center justify-center p-6">
-  <main class="bg-white rounded-3xl shadow-2xl w-full max-w-6xl p-8 animate-fadeInUp">
-    <h1 class="text-4xl font-extrabold text-center text-teal-700 mb-8">
-      Meta Tag Generator
-    </h1>
+<body class="bg-gradient-to-br from-cyan-50 to-teal-50 min-h-screen p-6">
+  <div class="max-w-6xl mx-auto">
+    <header class="text-center mb-10 animate-fadeInUp">
+      <h1 class="text-4xl md:text-5xl font-extrabold text-teal-700 mb-3">
+        <i class="fas fa-code mr-3"></i>Meta Tag Generator & Extractor
+      </h1>
+      <p class="text-gray-600 max-w-2xl mx-auto">
+        Create, preview, and extract essential meta tags for SEO and social media sharing. 
+        Perfect for developers and marketers to optimize web pages.
+      </p>
+    </header>
 
-    <form id="metaForm" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-      <!-- Fields are injected by the script below -->
-    </form>
+    <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+      <!-- Generator Panel -->
+      <div class="bg-white rounded-3xl shadow-2xl p-6 animate-fadeInUp">
+        <h2 class="text-2xl font-bold text-teal-700 mb-6 flex items-center">
+          <i class="fas fa-cogs mr-2"></i>Generator Settings
+        </h2>
 
-    <button id="generateBtn" type="button"
-            class="mt-8 w-full py-3 bg-teal-600 hover:bg-teal-700 text-white font-bold rounded-2xl transition-transform transform hover:scale-105">
-      Generate &amp; Copy Meta Tags
-    </button>
+        <form id="metaForm" class="grid grid-cols-1 sm:grid-cols-2 gap-5">
+          <!-- Fields will be injected by the script -->
+        </form>
 
-    <pre id="output"
-         class="mt-6 p-6 bg-gray-100 rounded-2xl shadow-inner overflow-x-auto text-sm font-mono whitespace-pre-wrap">
-    </pre>
-  </main>
+        <div class="flex flex-wrap gap-3 mt-6">
+          <button id="generateBtn" type="button"
+                  class="flex-1 py-3 bg-teal-600 hover:bg-teal-700 text-white font-bold rounded-2xl transition-transform transform hover:scale-[1.02]">
+            <i class="fas fa-bolt mr-2"></i>Generate Meta Tags
+          </button>
+          <button id="resetBtn" type="button"
+                  class="flex-1 py-3 bg-gray-200 hover:bg-gray-300 text-gray-700 font-bold rounded-2xl transition-transform transform hover:scale-[1.02]">
+            <i class="fas fa-redo mr-2"></i>Reset Form
+          </button>
+        </div>
+      </div>
+
+      <!-- Preview Panel -->
+      <div class="bg-white rounded-3xl shadow-2xl p-6 animate-fadeInUp" style="animation-delay: 0.1s">
+        <h2 class="text-2xl font-bold text-teal-700 mb-6 flex items-center">
+          <i class="fas fa-eye mr-2"></i>Preview
+        </h2>
+
+        <!-- Tabs -->
+        <div class="flex border-b border-gray-200 mb-6 overflow-x-auto">
+          <button id="codeTab" class="tab-button active py-3 px-6 font-medium whitespace-nowrap">Code</button>
+          <button id="previewTab" class="tab-button py-3 px-6 font-medium whitespace-nowrap">Social Preview</button>
+          <button id="searchTab" class="tab-button py-3 px-6 font-medium whitespace-nowrap">Search Result</button>
+          <button id="extractorTab" class="tab-button py-3 px-6 font-medium whitespace-nowrap">Meta Data Extractor</button>
+        </div>
+
+        <!-- Tab Content -->
+        <div id="codeOutput" class="tab-content">
+          <div class="relative">
+            <pre id="output" class="p-5 bg-gray-50 rounded-2xl shadow-inner overflow-x-auto text-sm font-mono whitespace-pre-wrap max-h-96"></pre>
+            <button id="copyBtn" class="absolute top-3 right-3 bg-gray-200 hover:bg-gray-300 p-2 rounded-lg">
+              <i class="fas fa-copy"></i>
+            </button>
+          </div>
+        </div>
+
+        <div id="previewOutput" class="tab-content hidden">
+          <div class="flex flex-wrap gap-4 mb-6">
+            <div class="social-icon bg-blue-600 text-white">
+              <i class="fab fa-facebook-f"></i>
+            </div>
+            <div class="social-icon bg-sky-500 text-white">
+              <i class="fab fa-twitter"></i>
+            </div>
+            <div class="social-icon bg-purple-600 text-white">
+              <i class="fab fa-linkedin-in"></i>
+            </div>
+            <div class="social-icon bg-pink-600 text-white">
+              <i class="fab fa-instagram"></i>
+            </div>
+          </div>
+          
+          <div class="preview-card max-w-lg border border-gray-200 rounded-xl overflow-hidden bg-white">
+            <div id="previewImage" class="w-full h-48 bg-gray-200 flex items-center justify-center">
+              <i class="fas fa-image text-4xl text-gray-400"></i>
+            </div>
+            <div class="p-4">
+              <div id="previewDomain" class="text-xs text-gray-500 mb-1">example.com</div>
+              <h3 id="previewTitle" class="font-bold text-lg mb-1">Your Page Title</h3>
+              <p id="previewDescription" class="text-gray-700 text-sm">This is where your page description will appear in social media previews.</p>
+            </div>
+          </div>
+        </div>
+
+        <div id="searchOutput" class="tab-content hidden">
+          <div class="preview-card max-w-2xl border border-gray-200 rounded-lg p-4 bg-white">
+            <div class="mb-2">
+              <div id="searchUrl" class="text-green-700 text-sm truncate">https://example.com/your-page-url</div>
+              <h3 id="searchTitle" class="text-xl text-blue-600 font-medium hover:underline cursor-pointer">Your Page Title - Website Name</h3>
+            </div>
+            <div class="flex items-start">
+              <div class="flex-1">
+                <div id="searchDate" class="text-gray-500 text-sm mb-1">Jun 22, 2025</div>
+                <p id="searchDescription" class="text-gray-800 text-sm">This is where your page description will appear in search engine results. It should be concise and informative, containing your primary keywords.</p>
+              </div>
+              <div id="searchFavicon" class="w-16 h-16 ml-4 bg-gray-100 border border-gray-200 rounded flex items-center justify-center">
+                <i class="fas fa-globe text-gray-400"></i>
+              </div>
+            </div>
+          </div>
+        </div>
+        
+        <!-- Meta Data Extractor Tab -->
+        <div id="extractorOutput" class="tab-content hidden">
+          <div class="url-input-container">
+            <input type="url" id="extractUrl" placeholder="Enter website URL (e.g., https://example.com)" class="focus:outline-none focus:ring-2 focus:ring-teal-400">
+            <button id="extractBtn">
+              <i class="fas fa-search mr-2"></i>Extract
+            </button>
+          </div>
+          
+          <div id="extractorResults" class="bg-white rounded-xl border border-gray-200 p-4 max-h-96 overflow-y-auto">
+            <div id="extractorPlaceholder" class="text-center py-10 text-gray-500">
+              <i class="fas fa-globe-americas text-4xl mb-4"></i>
+              <p>Enter a website URL and click "Extract" to analyze its meta tags</p>
+            </div>
+            <div id="extractorLoading" class="hidden py-10">
+              <div class="loader"></div>
+              <p class="text-center mt-4 text-gray-600">Analyzing website meta tags...</p>
+            </div>
+            <div id="extractorContent" class="hidden">
+              <h3 class="font-bold text-lg mb-4">Extracted Meta Tags</h3>
+              <div class="mb-4 p-3 bg-blue-50 rounded-lg">
+                <div class="text-sm text-gray-600 mb-1">Website URL:</div>
+                <div id="extractedUrl" class="font-medium truncate"></div>
+              </div>
+              <table class="extracted-meta-table">
+                <thead>
+                  <tr>
+                    <th>Property/Name</th>
+                    <th>Content</th>
+                  </tr>
+                </thead>
+                <tbody id="extractedTags">
+                  <!-- Tags will be inserted here -->
+                </tbody>
+              </table>
+            </div>
+            <div id="extractorError" class="hidden text-center py-10 text-red-500">
+              <i class="fas fa-exclamation-triangle text-3xl mb-3"></i>
+              <p id="errorMessage"></p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Copy Notification -->
+  <div id="copyNotification" class="copy-notification bg-teal-500 text-white px-6 py-3 rounded-lg shadow-lg">
+    <i class="fas fa-check-circle mr-2"></i>Meta tags copied to clipboard!
+  </div>
 
   <script>
     const fields = [
-      { label: 'Page Title', name: 'title', type: 'text' },
-      { label: 'Description', name: 'description', type: 'textarea' },
-      { label: 'Author', name: 'author', type: 'text' },
-      { label: 'Keywords', name: 'keywords', type: 'text' },
+      { label: 'Page Title', name: 'title', type: 'text', value: 'My Awesome Website', required: true },
+      { label: 'Description', name: 'description', type: 'textarea', value: 'This is a description of my amazing website that will appear in search results.', required: true },
+      { label: 'Author', name: 'author', type: 'text', value: 'Your Name' },
+      { label: 'Keywords', name: 'keywords', type: 'text', value: 'website, business, portfolio' },
       { label: 'Canonical URL', name: 'canonical', type: 'text', value: window.location.href },
       { label: 'Robots', name: 'robots', type: 'text', value: 'index, follow' },
       { label: 'Theme Color', name: 'themeColor', type: 'color', value: '#0ea5e9' },
       { label: 'Tile Color', name: 'tileColor', type: 'color', value: '#0ea5e9' },
-      { label: 'Favicon 32×32 URL', name: 'favicon32', type: 'text', value: '/favicon-32x32.png' },
-      { label: 'Favicon 16×16 URL', name: 'favicon16', type: 'text', value: '/favicon-16x16.png' },
+      { label: 'Favicon URL', name: 'favicon', type: 'text', value: '/favicon.ico' },
       { label: 'OG Type', name: 'ogType', type: 'text', value: 'website' },
       { label: 'OG URL', name: 'ogUrl', type: 'text', value: window.location.href },
       { label: 'OG Title', name: 'ogTitle', type: 'text' },
       { label: 'OG Description', name: 'ogDescription', type: 'textarea' },
-      { label: 'OG Image URL', name: 'ogImage', type: 'text' },
+      { label: 'OG Image URL', name: 'ogImage', type: 'text', value: 'https://via.placeholder.com/1200x630' },
       { label: 'Twitter Card', name: 'twitterCard', type: 'text', value: 'summary_large_image' },
-      { label: 'Twitter Image URL', name: 'twitterImage', type: 'text' }
+      { label: 'Twitter Image URL', name: 'twitterImage', type: 'text', value: 'https://via.placeholder.com/1200x630' },
+      { label: 'Site Name', name: 'siteName', type: 'text', value: 'My Website' }
     ];
 
+    // Initialize the form
     const form = document.getElementById('metaForm');
     
-    // Helper function to validate hex colors
     function isValidHex(color) {
       return /^#([0-9A-F]{3}){1,2}$/i.test(color);
     }
@@ -110,7 +350,13 @@
       const label = document.createElement('label');
       label.htmlFor = f.name;
       label.textContent = f.label;
-      label.className = 'font-semibold mb-1';
+      label.className = 'font-semibold mb-1 text-gray-700';
+      if (f.required) {
+        const req = document.createElement('span');
+        req.textContent = ' *';
+        req.className = 'text-red-500';
+        label.appendChild(req);
+      }
 
       let input;
       
@@ -119,22 +365,18 @@
         input.rows = 3;
       } 
       else if (f.type === 'color') {
-        // Create container for color inputs
         const container = document.createElement('div');
         container.className = 'color-input-container';
         
-        // Color preview box
         const preview = document.createElement('div');
         preview.className = 'color-preview';
         preview.style.backgroundColor = f.value || '#ffffff';
         
-        // Color picker input
         const colorPicker = document.createElement('input');
         colorPicker.type = 'color';
         colorPicker.value = f.value || '#0ea5e9';
-        colorPicker.className = 'cursor-pointer';
+        colorPicker.className = 'cursor-pointer w-10 h-10';
         
-        // Text input for hex code
         input = document.createElement('input');
         input.type = 'text';
         input.id = f.name;
@@ -143,7 +385,6 @@
         input.placeholder = 'Hex color (#RRGGBB)';
         input.className = 'border rounded-2xl p-2 focus:outline-none focus:ring-2 focus:ring-teal-400 flex-1';
         
-        // Sync between inputs
         colorPicker.addEventListener('input', () => {
           input.value = colorPicker.value;
           preview.style.backgroundColor = colorPicker.value;
@@ -181,14 +422,24 @@
       input.value = f.value || '';
       input.placeholder = f.label;
       input.className = 'border rounded-2xl p-2 focus:outline-none focus:ring-2 focus:ring-teal-400';
+      if (f.required) input.required = true;
 
       wrapper.append(label, input);
       form.appendChild(wrapper);
     });
 
+    // Get form values
+    function getFormValues() {
+      const values = {};
+      fields.forEach(field => {
+        values[field.name] = document.getElementById(field.name).value;
+      });
+      return values;
+    }
+
+    // Generate meta tags
     function generateMetaTags() {
-      const m = {};
-      fields.forEach(f => m[f.name] = document.getElementById(f.name).value);
+      const m = getFormValues();
 
       return `<!-- Primary Meta Tags -->
 <meta charset="UTF-8" />
@@ -204,30 +455,218 @@
 <!-- Theme & Icons -->
 <meta name="theme-color" content="${m.themeColor}" />
 <meta name="msapplication-TileColor" content="${m.tileColor}" />
-<link rel="icon" type="image/png" sizes="32x32" href="${m.favicon32}" />
-<link rel="icon" type="image/png" sizes="16x16" href="${m.favicon16}" />
+<link rel="icon" href="${m.favicon}" />
 
 <!-- Open Graph -->
 <meta property="og:type" content="${m.ogType}" />
 <meta property="og:url" content="${m.ogUrl}" />
 <meta property="og:title" content="${m.ogTitle || m.title}" />
-<meta property="og:description" content="${m.ogDescription}" />
-${m.ogImage ? `<meta property="og:image" content="${m.ogImage}" />` : ''}
+<meta property="og:description" content="${m.ogDescription || m.description}" />
+<meta property="og:image" content="${m.ogImage}" />
+<meta property="og:site_name" content="${m.siteName}" />
 
 <!-- Twitter -->
 <meta name="twitter:card" content="${m.twitterCard}" />
 <meta name="twitter:title" content="${m.ogTitle || m.title}" />
-<meta name="twitter:description" content="${m.ogDescription}" />
-${m.twitterImage ? `<meta name="twitter:image" content="${m.twitterImage}" />` : ''}`;
+<meta name="twitter:description" content="${m.ogDescription || m.description}" />
+<meta name="twitter:image" content="${m.twitterImage || m.ogImage}" />`;
     }
 
+    // Update previews
+    function updatePreviews() {
+      const m = getFormValues();
+      
+      // Update social preview
+      document.getElementById('previewTitle').textContent = m.ogTitle || m.title || 'Your Page Title';
+      document.getElementById('previewDescription').textContent = m.ogDescription || m.description || 'This is where your page description will appear in social media previews.';
+      
+      try {
+        const url = new URL(m.ogUrl || m.canonical || '');
+        document.getElementById('previewDomain').textContent = url.hostname;
+      } catch (e) {
+        document.getElementById('previewDomain').textContent = 'example.com';
+      }
+      
+      if (m.ogImage) {
+        document.getElementById('previewImage').innerHTML = `<img src="${m.ogImage}" alt="Preview" class="w-full h-full object-cover">`;
+      } else {
+        document.getElementById('previewImage').innerHTML = '<i class="fas fa-image text-4xl text-gray-400"></i>';
+      }
+      
+      // Update search preview
+      document.getElementById('searchTitle').textContent = m.title || 'Your Page Title';
+      document.getElementById('searchDescription').textContent = m.description || 'This is where your page description will appear in search engine results.';
+      
+      try {
+        const url = new URL(m.canonical || '');
+        document.getElementById('searchUrl').textContent = url.href;
+      } catch (e) {
+        document.getElementById('searchUrl').textContent = 'https://example.com/your-page-url';
+      }
+      
+      if (m.favicon) {
+        document.getElementById('searchFavicon').innerHTML = `<img src="${m.favicon}" alt="Favicon" class="w-full h-full object-contain">`;
+      } else {
+        document.getElementById('searchFavicon').innerHTML = '<i class="fas fa-globe text-gray-400"></i>';
+      }
+      
+      // Set current date
+      const now = new Date();
+      document.getElementById('searchDate').textContent = now.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
+    }
+
+    // Tab switching
+    function switchTab(tabId) {
+      // Hide all tab contents
+      document.querySelectorAll('.tab-content').forEach(tab => {
+        tab.classList.add('hidden');
+      });
+      
+      // Remove active class from all tabs
+      document.querySelectorAll('.tab-button').forEach(button => {
+        button.classList.remove('active');
+      });
+      
+      // Show selected tab content and mark button as active
+      document.getElementById(tabId).classList.remove('hidden');
+      document.querySelector(`button[id="${tabId.replace('Output', 'Tab')}"]`).classList.add('active');
+    }
+
+    // Wire up tab buttons
+    document.getElementById('codeTab').addEventListener('click', () => switchTab('codeOutput'));
+    document.getElementById('previewTab').addEventListener('click', () => {
+      switchTab('previewOutput');
+      updatePreviews();
+    });
+    document.getElementById('searchTab').addEventListener('click', () => {
+      switchTab('searchOutput');
+      updatePreviews();
+    });
+    document.getElementById('extractorTab').addEventListener('click', () => switchTab('extractorOutput'));
+
+    // Generate button
     document.getElementById('generateBtn').addEventListener('click', () => {
       const tags = generateMetaTags();
-      navigator.clipboard.writeText(tags);
       const out = document.getElementById('output');
       out.textContent = tags;
       out.scrollIntoView({ behavior: 'smooth' });
+      updatePreviews();
+      switchTab('codeOutput');
     });
+
+    // Copy button
+    document.getElementById('copyBtn').addEventListener('click', () => {
+      const tags = document.getElementById('output').textContent;
+      navigator.clipboard.writeText(tags);
+      
+      // Show notification
+      const notification = document.getElementById('copyNotification');
+      notification.classList.add('show');
+      setTimeout(() => {
+        notification.classList.remove('show');
+      }, 2000);
+    });
+
+    // Reset button
+    document.getElementById('resetBtn').addEventListener('click', () => {
+      fields.forEach(field => {
+        const element = document.getElementById(field.name);
+        if (element) element.value = field.value || '';
+      });
+      document.getElementById('output').textContent = '';
+    });
+
+    // Meta Data Extractor functionality
+    document.getElementById('extractBtn').addEventListener('click', async () => {
+      const urlInput = document.getElementById('extractUrl').value.trim();
+      
+      if (!urlInput) {
+        showExtractorError('Please enter a website URL');
+        return;
+      }
+      
+      // Validate URL
+      let url;
+      try {
+        url = new URL(urlInput);
+      } catch (e) {
+        showExtractorError('Please enter a valid URL (e.g., https://example.com)');
+        return;
+      }
+      
+      // Show loading state
+      document.getElementById('extractorPlaceholder').classList.add('hidden');
+      document.getElementById('extractorContent').classList.add('hidden');
+      document.getElementById('extractorError').classList.add('hidden');
+      document.getElementById('extractorLoading').classList.remove('hidden');
+      
+      try {
+        // Use a proxy to bypass CORS restrictions
+        const proxyUrl = `https://api.allorigins.win/get?url=${encodeURIComponent(url.href)}`;
+        
+        const response = await fetch(proxyUrl);
+        if (!response.ok) {
+          throw new Error(`Failed to fetch website: ${response.status}`);
+        }
+        
+        const data = await response.json();
+        const htmlContent = data.contents;
+        
+        // Parse the HTML content
+        const parser = new DOMParser();
+        const doc = parser.parseFromString(htmlContent, 'text/html');
+        
+        // Extract meta tags
+        const metaTags = Array.from(doc.querySelectorAll('meta'));
+        
+        // Update UI with extracted data
+        document.getElementById('extractedUrl').textContent = url.href;
+        
+        const tagsContainer = document.getElementById('extractedTags');
+        tagsContainer.innerHTML = '';
+        
+        // Add title tag
+        const title = doc.querySelector('title')?.textContent || 'No title found';
+        tagsContainer.innerHTML += `
+          <tr>
+            <td><span class="tag-badge">title</span></td>
+            <td>${title}</td>
+          </tr>
+        `;
+        
+        // Add meta tags
+        metaTags.forEach(tag => {
+          const name = tag.getAttribute('name') || tag.getAttribute('property') || tag.getAttribute('itemprop') || 'unnamed';
+          const content = tag.getAttribute('content') || '';
+          
+          tagsContainer.innerHTML += `
+            <tr>
+              <td><span class="tag-badge">${name}</span></td>
+              <td>${content}</td>
+            </tr>
+          `;
+        });
+        
+        // Show results
+        document.getElementById('extractorLoading').classList.add('hidden');
+        document.getElementById('extractorContent').classList.remove('hidden');
+      } catch (error) {
+        showExtractorError(`Error extracting meta tags: ${error.message}`);
+      }
+    });
+    
+    function showExtractorError(message) {
+      document.getElementById('extractorLoading').classList.add('hidden');
+      document.getElementById('extractorContent').classList.add('hidden');
+      document.getElementById('extractorPlaceholder').classList.add('hidden');
+      
+      const errorElement = document.getElementById('extractorError');
+      document.getElementById('errorMessage').textContent = message;
+      errorElement.classList.remove('hidden');
+    }
+
+    // Initialize previews
+    updatePreviews();
   </script>
 </body>
 </html>
