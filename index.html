@@ -156,6 +156,51 @@
     .url-input-container button:hover {
       background: #0284c7;
     }
+    .extracted-tabs {
+      display: flex;
+      border-bottom: 1px solid #e5e7eb;
+      margin-bottom: 16px;
+    }
+    .extracted-tab {
+      padding: 8px 16px;
+      cursor: pointer;
+      border-bottom: 3px solid transparent;
+      transition: all 0.3s ease;
+    }
+    .extracted-tab.active {
+      border-bottom-color: #0ea5e9;
+      color: #0ea5e9;
+      font-weight: 600;
+    }
+    .extracted-tab-content {
+      display: none;
+    }
+    .extracted-tab-content.active {
+      display: block;
+    }
+    .extracted-preview-container {
+      margin-top: 20px;
+    }
+    .preview-platform {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin-bottom: 16px;
+    }
+    .platform-icon {
+      width: 40px;
+      height: 40px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 50%;
+      font-size: 18px;
+      background: #e5e7eb;
+      color: #4b5563;
+    }
+    .platform-name {
+      font-weight: 600;
+    }
   </style>
 </head>
 <body class="bg-gradient-to-br from-cyan-50 to-teal-50 min-h-screen p-6">
@@ -266,7 +311,7 @@
         <!-- Meta Data Extractor Tab -->
         <div id="extractorOutput" class="tab-content hidden">
           <div class="url-input-container">
-            <input type="url" id="extractUrl" placeholder="Enter website URL (e.g., https://example.com)" class="focus:outline-none focus:ring-2 focus:ring-teal-400">
+            <input type="url" id="extractUrl" placeholder="Enter website URL (e.g., https://example.com)" class="focus:outline-none focus:ring-2 focus:ring-teal-400" value="https://example.com">
             <button id="extractBtn">
               <i class="fas fa-search mr-2"></i>Extract
             </button>
@@ -282,22 +327,73 @@
               <p class="text-center mt-4 text-gray-600">Analyzing website meta tags...</p>
             </div>
             <div id="extractorContent" class="hidden">
-              <h3 class="font-bold text-lg mb-4">Extracted Meta Tags</h3>
-              <div class="mb-4 p-3 bg-blue-50 rounded-lg">
-                <div class="text-sm text-gray-600 mb-1">Website URL:</div>
-                <div id="extractedUrl" class="font-medium truncate"></div>
+              <!-- Tabs for extracted data -->
+              <div class="extracted-tabs mb-4">
+                <div class="extracted-tab active" data-tab="tags">Extracted Tags</div>
+                <div class="extracted-tab" data-tab="preview">Social Preview</div>
               </div>
-              <table class="extracted-meta-table">
-                <thead>
-                  <tr>
-                    <th>Property/Name</th>
-                    <th>Content</th>
-                  </tr>
-                </thead>
-                <tbody id="extractedTags">
-                  <!-- Tags will be inserted here -->
-                </tbody>
-              </table>
+              
+              <!-- Extracted Tags Tab -->
+              <div id="extractedTagsTab" class="extracted-tab-content active">
+                <h3 class="font-bold text-lg mb-4">Extracted Meta Tags</h3>
+                <div class="mb-4 p-3 bg-blue-50 rounded-lg">
+                  <div class="text-sm text-gray-600 mb-1">Website URL:</div>
+                  <div id="extractedUrl" class="font-medium truncate"></div>
+                </div>
+                <table class="extracted-meta-table">
+                  <thead>
+                    <tr>
+                      <th>Property/Name</th>
+                      <th>Content</th>
+                    </tr>
+                  </thead>
+                  <tbody id="extractedTags">
+                    <!-- Tags will be inserted here -->
+                  </tbody>
+                </table>
+              </div>
+              
+              <!-- Social Preview Tab -->
+              <div id="extractedPreviewTab" class="extracted-tab-content">
+                <h3 class="font-bold text-lg mb-4">Social Media Preview</h3>
+                <div class="extracted-preview-container">
+                  <div class="preview-platform">
+                    <div class="platform-icon bg-blue-600 text-white">
+                      <i class="fab fa-facebook-f"></i>
+                    </div>
+                    <div class="platform-name">Facebook Preview</div>
+                  </div>
+                  
+                  <div class="preview-card max-w-lg border border-gray-200 rounded-xl overflow-hidden bg-white mx-auto">
+                    <div id="extractedPreviewImage" class="w-full h-48 bg-gray-200 flex items-center justify-center">
+                      <i class="fas fa-image text-4xl text-gray-400"></i>
+                    </div>
+                    <div class="p-4">
+                      <div id="extractedPreviewDomain" class="text-xs text-gray-500 mb-1">example.com</div>
+                      <h3 id="extractedPreviewTitle" class="font-bold text-lg mb-1">Page Title</h3>
+                      <p id="extractedPreviewDescription" class="text-gray-700 text-sm">Page description will appear here.</p>
+                    </div>
+                  </div>
+                  
+                  <div class="preview-platform mt-8">
+                    <div class="platform-icon bg-sky-500 text-white">
+                      <i class="fab fa-twitter"></i>
+                    </div>
+                    <div class="platform-name">Twitter Preview</div>
+                  </div>
+                  
+                  <div class="preview-card max-w-lg border border-gray-200 rounded-xl overflow-hidden bg-white mx-auto">
+                    <div id="extractedTwitterImage" class="w-full h-48 bg-gray-200 flex items-center justify-center">
+                      <i class="fas fa-image text-4xl text-gray-400"></i>
+                    </div>
+                    <div class="p-4">
+                      <div id="extractedTwitterDomain" class="text-xs text-gray-500 mb-1">example.com</div>
+                      <h3 id="extractedTwitterTitle" class="font-bold text-lg mb-1">Page Title</h3>
+                      <p id="extractedTwitterDescription" class="text-gray-700 text-sm">Page description will appear here.</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
             </div>
             <div id="extractorError" class="hidden text-center py-10 text-red-500">
               <i class="fas fa-exclamation-triangle text-3xl mb-3"></i>
@@ -647,6 +743,41 @@
           `;
         });
         
+        // Extract preview data
+        const ogTitle = doc.querySelector('meta[property="og:title"]')?.getAttribute('content') || title;
+        const ogDescription = doc.querySelector('meta[property="og:description"]')?.getAttribute('content') || 
+                             doc.querySelector('meta[name="description"]')?.getAttribute('content') || 
+                             'No description available';
+        const ogImage = doc.querySelector('meta[property="og:image"]')?.getAttribute('content') || 
+                       doc.querySelector('meta[name="twitter:image"]')?.getAttribute('content') || 
+                       '';
+        
+        // Update preview UI
+        document.getElementById('extractedPreviewTitle').textContent = ogTitle;
+        document.getElementById('extractedPreviewDescription').textContent = ogDescription;
+        document.getElementById('extractedPreviewDomain').textContent = url.hostname;
+        
+        if (ogImage) {
+          document.getElementById('extractedPreviewImage').innerHTML = `<img src="${ogImage}" alt="Preview" class="w-full h-full object-cover">`;
+        } else {
+          document.getElementById('extractedPreviewImage').innerHTML = '<i class="fas fa-image text-4xl text-gray-400"></i>';
+        }
+        
+        // Update Twitter preview
+        const twitterTitle = doc.querySelector('meta[name="twitter:title"]')?.getAttribute('content') || ogTitle;
+        const twitterDescription = doc.querySelector('meta[name="twitter:description"]')?.getAttribute('content') || ogDescription;
+        const twitterImage = doc.querySelector('meta[name="twitter:image"]')?.getAttribute('content') || ogImage;
+        
+        document.getElementById('extractedTwitterTitle').textContent = twitterTitle;
+        document.getElementById('extractedTwitterDescription').textContent = twitterDescription;
+        document.getElementById('extractedTwitterDomain').textContent = url.hostname;
+        
+        if (twitterImage) {
+          document.getElementById('extractedTwitterImage').innerHTML = `<img src="${twitterImage}" alt="Twitter Preview" class="w-full h-full object-cover">`;
+        } else {
+          document.getElementById('extractedTwitterImage').innerHTML = '<i class="fas fa-image text-4xl text-gray-400"></i>';
+        }
+        
         // Show results
         document.getElementById('extractorLoading').classList.add('hidden');
         document.getElementById('extractorContent').classList.remove('hidden');
@@ -665,8 +796,33 @@
       errorElement.classList.remove('hidden');
     }
 
+    // Tab switching for extracted data
+    document.querySelectorAll('.extracted-tab').forEach(tab => {
+      tab.addEventListener('click', () => {
+        // Remove active class from all tabs
+        document.querySelectorAll('.extracted-tab').forEach(t => {
+          t.classList.remove('active');
+        });
+        
+        // Add active class to clicked tab
+        tab.classList.add('active');
+        
+        // Hide all tab contents
+        document.querySelectorAll('.extracted-tab-content').forEach(content => {
+          content.classList.remove('active');
+        });
+        
+        // Show the corresponding content
+        const tabName = tab.getAttribute('data-tab');
+        document.getElementById(`extracted${tabName.charAt(0).toUpperCase() + tabName.slice(1)}Tab`).classList.add('active');
+      });
+    });
+
     // Initialize previews
     updatePreviews();
+    
+    // Initialize the extractor tab
+    document.getElementById('extractUrl').value = window.location.href;
   </script>
 </body>
 </html>
