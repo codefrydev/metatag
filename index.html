@@ -31,278 +31,108 @@
 <meta name="twitter:description" content="Generate perfectly formatted meta tags for SEO, Facebook, LinkedIn, Twitter, and more—instantly copy and paste!" />
 <meta name="twitter:image" content="https://raw.githubusercontent.com/codefrydev/metatag/b492e38d9a48988bc860f2cc1a1cbe5c7a2a1913/MetaTag.svg" />
   
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
   <script src="https://cdn.tailwindcss.com"></script>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-  <style>
-    @keyframes fadeInUp {
-      from { opacity: 0; transform: translateY(20px); }
-      to { opacity: 1; transform: translateY(0); }
-    }
-    .animate-fadeInUp {
-      animation: fadeInUp 0.6s ease-out both;
-    }
-    .color-input-container {
-      display: flex;
-      gap: 8px;
-      align-items: center;
-    }
-    .color-preview {
-      width: 30px;
-      height: 30px;
-      border-radius: 6px;
-      border: 1px solid #cbd5e1;
-    }
-    .preview-card {
-      transition: all 0.3s ease;
-      box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1);
-    }
-    .preview-card:hover {
-      transform: translateY(-5px);
-      box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
-    }
-    .tab-button {
-      transition: all 0.3s ease;
-    }
-    .tab-button.active {
-      border-bottom: 3px solid #0ea5e9;
-      color: #0ea5e9;
-      font-weight: 600;
-    }
-    .social-icon {
-      width: 40px;
-      height: 40px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      border-radius: 50%;
-      font-size: 18px;
-    }
-    .copy-notification {
-      position: fixed;
-      top: 20px;
-      right: 20px;
-      opacity: 0;
-      transition: opacity 0.3s ease;
-      z-index: 100;
-    }
-    .copy-notification.show {
-      opacity: 1;
-    }
-    .tag-badge {
-      display: inline-block;
-      background: #dbeafe;
-      color: #1d4ed8;
-      border-radius: 4px;
-      padding: 2px 6px;
-      font-size: 12px;
-      font-weight: 500;
-      margin-right: 4px;
-    }
-    .extracted-meta-table {
-      width: 100%;
-      border-collapse: collapse;
-    }
-    .extracted-meta-table th {
-      background: #f3f4f6;
-      text-align: left;
-      padding: 10px;
-      font-weight: 600;
-      border-bottom: 2px solid #e5e7eb;
-    }
-    .extracted-meta-table td {
-      padding: 10px;
-      border-bottom: 1px solid #e5e7eb;
-      vertical-align: top;
-      word-break: break-all;
-    }
-    .extracted-meta-table tr:hover td {
-      background: #f9fafb;
-    }
-    .loader {
-      border: 4px solid #f3f3f3;
-      border-top: 4px solid #0ea5e9;
-      border-radius: 50%;
-      width: 30px;
-      height: 30px;
-      animation: spin 1s linear infinite;
-      margin: 0 auto;
-    }
-    @keyframes spin {
-      0% { transform: rotate(0deg); }
-      100% { transform: rotate(360deg); }
-    }
-    .url-input-container {
-      display: flex;
-      gap: 10px;
-      margin-bottom: 20px;
-    }
-    .url-input-container input {
-      flex: 1;
-      border: 1px solid #d1d5db;
-      border-radius: 12px;
-      padding: 12px 16px;
-      font-size: 16px;
-    }
-    .url-input-container button {
-      background: #0ea5e9;
-      color: white;
-      border: none;
-      border-radius: 12px;
-      padding: 0 24px;
-      font-weight: 600;
-      cursor: pointer;
-      transition: background 0.3s;
-    }
-    .url-input-container button:hover {
-      background: #0284c7;
-    }
-    .extracted-tabs {
-      display: flex;
-      border-bottom: 1px solid #e5e7eb;
-      margin-bottom: 16px;
-    }
-    .extracted-tab {
-      padding: 8px 16px;
-      cursor: pointer;
-      border-bottom: 3px solid transparent;
-      transition: all 0.3s ease;
-    }
-    .extracted-tab.active {
-      border-bottom-color: #0ea5e9;
-      color: #0ea5e9;
-      font-weight: 600;
-    }
-    .extracted-tab-content {
-      display: none;
-    }
-    .extracted-tab-content.active {
-      display: block;
-    }
-    .extracted-preview-container {
-      margin-top: 20px;
-    }
-    .preview-platform {
-      display: flex;
-      align-items: center;
-      gap: 8px;
-      margin-bottom: 16px;
-    }
-    .platform-icon {
-      width: 40px;
-      height: 40px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      border-radius: 50%;
-      font-size: 18px;
-      background: #e5e7eb;
-      color: #4b5563;
-    }
-    .platform-name {
-      font-weight: 600;
-    }
-  </style>
+  <link rel="stylesheet" href="css/main.css" />
 </head>
-<body class="bg-gradient-to-br from-cyan-50 to-teal-50 min-h-screen p-6">
-  <div class="max-w-12xl mx-auto">
-    <header class="text-center mb-10 animate-fadeInUp">
-      <h1 class="text-4xl md:text-5xl font-extrabold text-teal-700 mb-3">
-        <i class="fas fa-code mr-3"></i>Meta Tag Generator & Extractor
+<body class="page-bg min-h-screen p-4 sm:p-6">
+  <div class="max-w-6xl mx-auto">
+    <header class="text-center mb-8 sm:mb-10 animate-fadeInUp">
+      <h1 class="text-3xl sm:text-4xl md:text-5xl font-extrabold text-teal-800 mb-2 tracking-tight">
+        <i class="fas fa-code mr-2 text-teal-600" aria-hidden="true"></i><span id="headerTitle"></span>
       </h1>
-      <p class="text-gray-600 max-w-2xl mx-auto">
-        Create, preview, and extract essential meta tags for SEO and social media sharing. 
-        Perfect for developers and marketers to optimize web pages.
-      </p>
+      <p class="text-slate-600 max-w-2xl mx-auto text-sm sm:text-base leading-relaxed" id="tagline"></p>
     </header>
 
-    <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+    <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 lg:gap-8">
       <!-- Generator Panel -->
-      <div class="bg-white rounded-3xl shadow-2xl p-6 animate-fadeInUp">
-        <h2 class="text-2xl font-bold text-teal-700 mb-6 flex items-center">
-          <i class="fas fa-cogs mr-2"></i>Generator Settings
+      <div class="card-panel p-5 sm:p-6 animate-fadeInUp">
+        <h2 class="text-xl sm:text-2xl font-bold text-teal-800 mb-5 flex items-center gap-2">
+          <i class="fas fa-cogs text-teal-600" aria-hidden="true"></i><span id="generatorSettingsTitle"></span>
         </h2>
 
-        <form id="metaForm" class="grid grid-cols-1 sm:grid-cols-2 gap-5">
+        <form id="metaForm" class="grid grid-cols-1 sm:grid-cols-2 gap-4">
           <!-- Fields will be injected by the script -->
         </form>
 
-        <div class="flex flex-wrap gap-3 mt-6">
-          <button id="generateBtn" type="button"
-                  class="flex-1 py-3 bg-teal-600 hover:bg-teal-700 text-white font-bold rounded-2xl transition-transform transform hover:scale-[1.02]">
-            <i class="fas fa-bolt mr-2"></i>Generate Meta Tags
+        <div class="flex flex-wrap gap-3 mt-5">
+          <button id="generateBtn" type="button" class="flex-1 py-3 px-4 btn-primary">
+            <i class="fas fa-bolt mr-2" aria-hidden="true"></i><span id="generateBtnText"></span>
           </button>
-          <button id="resetBtn" type="button"
-                  class="flex-1 py-3 bg-gray-200 hover:bg-gray-300 text-gray-700 font-bold rounded-2xl transition-transform transform hover:scale-[1.02]">
-            <i class="fas fa-redo mr-2"></i>Reset Form
+          <button id="resetBtn" type="button" class="flex-1 py-3 px-4 btn-secondary">
+            <i class="fas fa-redo mr-2" aria-hidden="true"></i><span id="resetBtnText"></span>
           </button>
         </div>
       </div>
 
       <!-- Preview Panel -->
-      <div class="bg-white rounded-3xl shadow-2xl p-6 animate-fadeInUp" style="animation-delay: 0.1s">
-        <h2 class="text-2xl font-bold text-teal-700 mb-6 flex items-center">
-          <i class="fas fa-eye mr-2"></i>Preview
+      <div class="card-panel p-5 sm:p-6 animate-fadeInUp" style="animation-delay: 0.08s">
+        <h2 class="text-xl sm:text-2xl font-bold text-teal-800 mb-5 flex items-center gap-2">
+          <i class="fas fa-eye text-teal-600" aria-hidden="true"></i><span id="previewSectionTitle"></span>
         </h2>
 
         <!-- Tabs -->
-        <div class="flex border-b border-gray-200 mb-6 overflow-x-auto">
-          <button id="codeTab" class="tab-button active py-3 px-6 font-medium whitespace-nowrap">Code</button>
-          <button id="previewTab" class="tab-button py-3 px-6 font-medium whitespace-nowrap">Social Preview</button>
-          <button id="searchTab" class="tab-button py-3 px-6 font-medium whitespace-nowrap">Search Result</button>
-          <button id="extractorTab" class="tab-button py-3 px-6 font-medium whitespace-nowrap">Meta Data Extractor</button>
+        <div class="tabs-wrap mb-5">
+          <button id="codeTab" class="tab-button active">Code</button>
+          <button id="previewTab" class="tab-button">Social Preview</button>
+          <button id="searchTab" class="tab-button">Search Result</button>
+          <button id="extractorTab" class="tab-button">Meta Data Extractor</button>
         </div>
 
         <!-- Tab Content -->
         <div id="codeOutput" class="tab-content">
-          <div class="relative">
-            <pre id="output" class="p-5 bg-gray-50 rounded-2xl shadow-inner overflow-x-auto text-sm font-mono whitespace-pre-wrap max-h-96"></pre>
-            <button id="copyBtn" class="absolute top-3 right-3 bg-gray-200 hover:bg-gray-300 p-2 rounded-lg">
-              <i class="fas fa-copy"></i>
+          <div class="code-block-wrap relative">
+            <pre id="output" class="overflow-x-auto whitespace-pre-wrap"></pre>
+            <button id="copyBtn" type="button" class="absolute top-3 right-3 p-2 rounded-lg" title="Copy to clipboard">
+              <i class="fas fa-copy" aria-hidden="true"></i>
             </button>
           </div>
         </div>
 
         <div id="previewOutput" class="tab-content hidden">
-          <div class="flex flex-wrap gap-4 mb-6">
-            <div class="social-icon bg-blue-600 text-white">
-              <i class="fab fa-facebook-f"></i>
+          <div class="flex flex-wrap gap-3 mb-5">
+            <div class="social-icon bg-[#1877f2] text-white">
+              <i class="fab fa-facebook-f" aria-hidden="true"></i>
             </div>
-            <div class="social-icon bg-sky-500 text-white">
-              <i class="fab fa-twitter"></i>
+            <div class="social-icon bg-[#1da1f2] text-white">
+              <i class="fab fa-twitter" aria-hidden="true"></i>
             </div>
-            <div class="social-icon bg-purple-600 text-white">
-              <i class="fab fa-linkedin-in"></i>
+            <div class="social-icon bg-[#0a66c2] text-white">
+              <i class="fab fa-linkedin-in" aria-hidden="true"></i>
             </div>
-            <div class="social-icon bg-pink-600 text-white">
-              <i class="fab fa-instagram"></i>
+            <div class="social-icon bg-[#e4405f] text-white">
+              <i class="fab fa-instagram" aria-hidden="true"></i>
             </div>
           </div>
           
-          <div class="preview-card max-w-lg border border-gray-200 rounded-xl overflow-hidden bg-white">
-            <div id="previewImage" class="w-full h-48 bg-gray-200 flex items-center justify-center">
-              <i class="fas fa-image text-4xl text-gray-400"></i>
+          <div class="preview-card max-w-lg rounded-xl overflow-hidden bg-white border border-slate-200">
+            <div id="previewImage" class="w-full h-48 bg-slate-100 flex items-center justify-center">
+              <i class="fas fa-image text-4xl text-slate-300" aria-hidden="true"></i>
             </div>
             <div class="p-4">
-              <div id="previewDomain" class="text-xs text-gray-500 mb-1">example.com</div>
-              <h3 id="previewTitle" class="font-bold text-lg mb-1">Your Page Title</h3>
-              <p id="previewDescription" class="text-gray-700 text-sm">This is where your page description will appear in social media previews.</p>
+              <div id="previewDomain" class="text-xs text-slate-500 mb-1">example.com</div>
+              <h3 id="previewTitle" class="font-bold text-lg mb-1 text-slate-900">Your Page Title</h3>
+              <p id="previewDescription" class="text-slate-600 text-sm leading-relaxed">This is where your page description will appear in social media previews.</p>
             </div>
           </div>
         </div>
 
         <div id="searchOutput" class="tab-content hidden">
-          <div class="preview-card max-w-2xl border border-gray-200 rounded-lg p-4 bg-white">
+          <div class="preview-card max-w-2xl rounded-xl p-4 bg-white border border-slate-200">
             <div class="mb-2">
-              <div id="searchUrl" class="text-green-700 text-sm truncate">https://example.com/your-page-url</div>
-              <h3 id="searchTitle" class="text-xl text-blue-600 font-medium hover:underline cursor-pointer">Your Page Title - Website Name</h3>
+              <div id="searchUrl" class="text-emerald-700 text-sm truncate">https://example.com/your-page-url</div>
+              <h3 id="searchTitle" class="text-lg font-medium text-blue-600 hover:underline cursor-pointer">Your Page Title - Website Name</h3>
             </div>
-            <div class="flex items-start">
-              <div class="flex-1">
-                <div id="searchDate" class="text-gray-500 text-sm mb-1">Jun 22, 2025</div>
-                <p id="searchDescription" class="text-gray-800 text-sm">This is where your page description will appear in search engine results. It should be concise and informative, containing your primary keywords.</p>
+            <div class="flex items-start gap-4">
+              <div class="flex-1 min-w-0">
+                <div id="searchDate" class="text-slate-500 text-sm mb-1">Jun 22, 2025</div>
+                <p id="searchDescription" class="text-slate-700 text-sm leading-relaxed">This is where your page description will appear in search engine results. It should be concise and informative, containing your primary keywords.</p>
               </div>
-              <div id="searchFavicon" class="w-16 h-16 ml-4 bg-gray-100 border border-gray-200 rounded flex items-center justify-center">
-                <i class="fas fa-globe text-gray-400"></i>
+              <div id="searchFavicon" class="w-14 h-14 flex-shrink-0 bg-slate-100 border border-slate-200 rounded-lg flex items-center justify-center">
+                <i class="fas fa-globe text-slate-400" aria-hidden="true"></i>
               </div>
             </div>
           </div>
@@ -311,40 +141,40 @@
         <!-- Meta Data Extractor Tab -->
         <div id="extractorOutput" class="tab-content hidden">
           <div class="url-input-container">
-            <input type="url" id="extractUrl" placeholder="Enter website URL (e.g., https://example.com)" class="focus:outline-none focus:ring-2 focus:ring-teal-400" value="https://example.com">
-            <button id="extractBtn">
-              <i class="fas fa-search mr-2"></i>Extract
+            <input type="url" id="extractUrl" value="https://example.com" aria-label="Website URL to extract meta tags from">
+            <button id="extractBtn" type="button">
+              <i class="fas fa-search mr-2" aria-hidden="true"></i><span id="extractBtnText"></span>
             </button>
           </div>
           
-          <div id="extractorResults" class="bg-white rounded-xl border border-gray-200 p-4 max-h-96 overflow-y-auto">
-            <div id="extractorPlaceholder" class="text-center py-10 text-gray-500">
-              <i class="fas fa-globe-americas text-4xl mb-4"></i>
-              <p>Enter a website URL and click "Extract" to analyze its meta tags</p>
+          <div id="extractorResults" class="bg-slate-50/80 rounded-xl border border-slate-200 p-4 max-h-96 overflow-y-auto">
+            <div id="extractorPlaceholder" class="text-center py-10 text-slate-500">
+              <i class="fas fa-globe-americas text-4xl mb-4 text-teal-500/70" aria-hidden="true"></i>
+              <p id="extractorPlaceholderText" class="text-sm max-w-xs mx-auto leading-relaxed"></p>
             </div>
             <div id="extractorLoading" class="hidden py-10">
               <div class="loader"></div>
-              <p class="text-center mt-4 text-gray-600">Analyzing website meta tags...</p>
+              <p id="extractorLoadingText" class="text-center mt-4 text-slate-600 text-sm"></p>
             </div>
             <div id="extractorContent" class="hidden">
               <!-- Tabs for extracted data -->
               <div class="extracted-tabs mb-4">
-                <div class="extracted-tab active" data-tab="tags">Extracted Tags</div>
-                <div class="extracted-tab" data-tab="preview">Social Preview</div>
+                <div class="extracted-tab active" data-tab="tags" id="extractedTabTagsText"></div>
+                <div class="extracted-tab" data-tab="preview" id="extractedTabPreviewText"></div>
               </div>
               
               <!-- Extracted Tags Tab -->
               <div id="extractedTagsTab" class="extracted-tab-content active">
-                <h3 class="font-bold text-lg mb-4">Extracted Meta Tags</h3>
-                <div class="mb-4 p-3 bg-blue-50 rounded-lg">
-                  <div class="text-sm text-gray-600 mb-1">Website URL:</div>
-                  <div id="extractedUrl" class="font-medium truncate"></div>
+                <h3 id="extractedMetaTagsHeading" class="font-bold text-slate-800 text-lg mb-4"></h3>
+                <div class="mb-4 p-3 bg-teal-50 rounded-lg border border-teal-100">
+                  <div id="websiteUrlLabel" class="text-xs font-medium text-slate-500 uppercase tracking-wide mb-1"></div>
+                  <div id="extractedUrl" class="font-medium text-slate-800 truncate text-sm"></div>
                 </div>
                 <table class="extracted-meta-table">
                   <thead>
                     <tr>
-                      <th>Property/Name</th>
-                      <th>Content</th>
+                      <th id="tablePropertyName"></th>
+                      <th id="tableContent"></th>
                     </tr>
                   </thead>
                   <tbody id="extractedTags">
@@ -355,13 +185,13 @@
               
               <!-- Social Preview Tab -->
               <div id="extractedPreviewTab" class="extracted-tab-content">
-                <h3 class="font-bold text-lg mb-4">Social Media Preview</h3>
+                <h3 id="socialMediaPreviewHeading" class="font-bold text-lg mb-4"></h3>
                 <div class="extracted-preview-container">
                   <div class="preview-platform">
                     <div class="platform-icon bg-blue-600 text-white">
                       <i class="fab fa-facebook-f"></i>
                     </div>
-                    <div class="platform-name">Facebook Preview</div>
+                    <div id="facebookPreviewLabel" class="platform-name"></div>
                   </div>
                   
                   <div class="preview-card max-w-lg border border-gray-200 rounded-xl overflow-hidden bg-white mx-auto">
@@ -379,7 +209,7 @@
                     <div class="platform-icon bg-sky-500 text-white">
                       <i class="fab fa-twitter"></i>
                     </div>
-                    <div class="platform-name">Twitter Preview</div>
+                    <div id="twitterPreviewLabel" class="platform-name"></div>
                   </div>
                   
                   <div class="preview-card max-w-lg border border-gray-200 rounded-xl overflow-hidden bg-white mx-auto">
@@ -395,9 +225,9 @@
                 </div>
               </div>
             </div>
-            <div id="extractorError" class="hidden text-center py-10 text-red-500">
-              <i class="fas fa-exclamation-triangle text-3xl mb-3"></i>
-              <p id="errorMessage"></p>
+            <div id="extractorError" class="hidden text-center py-10 text-red-600">
+              <i class="fas fa-exclamation-triangle text-3xl mb-3 opacity-80" aria-hidden="true"></i>
+              <p id="errorMessage" class="text-sm max-w-sm mx-auto"></p>
             </div>
           </div>
         </div>
@@ -406,457 +236,10 @@
   </div>
 
   <!-- Copy Notification -->
-  <div id="copyNotification" class="copy-notification bg-teal-500 text-white px-6 py-3 rounded-lg shadow-lg">
-    <i class="fas fa-check-circle mr-2"></i>Meta tags copied to clipboard!
+  <div id="copyNotification" class="copy-notification bg-teal-600 text-white" role="status" aria-live="polite">
+    <i class="fas fa-check-circle mr-2" aria-hidden="true"></i><span id="copyNotificationText"></span>
   </div>
 
-  <script>
-    const fields = [
-      { label: 'Page Title', name: 'title', type: 'text', value: 'Codefrydev Meta Tag Generator', required: true },
-      { label: 'Description', name: 'description', type: 'textarea', value: 'This is a description of my amazing website that will appear in search results.', required: true },
-      { label: 'Author', name: 'author', type: 'text', value: 'Codefrydev' },
-      { label: 'Keywords', name: 'keywords', type: 'text', value: 'website, business, portfolio' },
-      { label: 'Canonical URL', name: 'canonical', type: 'text', value: window.location.href },
-      { label: 'Robots', name: 'robots', type: 'text', value: 'index, follow' },
-      { label: 'Theme Color', name: 'themeColor', type: 'color', value: '#0ea5e9' },
-      { label: 'Tile Color', name: 'tileColor', type: 'color', value: '#0ea5e9' },
-      { label: 'Favicon URL', name: 'favicon', type: 'text', value: 'https://codefrydev.in/favicon-32x32.png' },
-      { label: 'OG Type', name: 'ogType', type: 'text', value: 'website' },
-      { label: 'OG URL', name: 'ogUrl', type: 'text', value: window.location.href },
-      { label: 'OG Title', name: 'ogTitle', type: 'text' },
-      { label: 'OG Description', name: 'ogDescription', type: 'textarea' },
-      { label: 'OG Image URL', name: 'ogImage', type: 'text', value: 'https://via.placeholder.com/1200x630https://codefrydev.in/images/IconCodefrydev.svg' },
-      { label: 'Twitter Card', name: 'twitterCard', type: 'text', value: 'summary_large_image' },
-      { label: 'Twitter Image URL', name: 'twitterImage', type: 'text', value: 'https://codefrydev.in/images/IconCodefrydev.svg' },
-      { label: 'Site Name', name: 'siteName', type: 'text', value: 'Codefrydev Website' }
-    ];
-
-    // Initialize the form
-    const form = document.getElementById('metaForm');
-    
-    function isValidHex(color) {
-      return /^#([0-9A-F]{3}){1,2}$/i.test(color);
-    }
-
-    fields.forEach((f, i) => {
-      const wrapper = document.createElement('div');
-      wrapper.className = `flex flex-col animate-fadeInUp`;
-      wrapper.style.animationDelay = `${i * 0.1}s`;
-
-      const label = document.createElement('label');
-      label.htmlFor = f.name;
-      label.textContent = f.label;
-      label.className = 'font-semibold mb-1 text-gray-700';
-      if (f.required) {
-        const req = document.createElement('span');
-        req.textContent = ' *';
-        req.className = 'text-red-500';
-        label.appendChild(req);
-      }
-
-      let input;
-      
-      if (f.type === 'textarea') {
-        input = document.createElement('textarea');
-        input.rows = 3;
-      } 
-      else if (f.type === 'color') {
-        const container = document.createElement('div');
-        container.className = 'color-input-container';
-        
-        const preview = document.createElement('div');
-        preview.className = 'color-preview';
-        preview.style.backgroundColor = f.value || '#ffffff';
-        
-        const colorPicker = document.createElement('input');
-        colorPicker.type = 'color';
-        colorPicker.value = f.value || '#0ea5e9';
-        colorPicker.className = 'cursor-pointer w-10 h-10';
-        
-        input = document.createElement('input');
-        input.type = 'text';
-        input.id = f.name;
-        input.name = f.name;
-        input.value = f.value || '';
-        input.placeholder = 'Hex color (#RRGGBB)';
-        input.className = 'border rounded-2xl p-2 focus:outline-none focus:ring-2 focus:ring-teal-400 flex-1';
-        
-        colorPicker.addEventListener('input', () => {
-          input.value = colorPicker.value;
-          preview.style.backgroundColor = colorPicker.value;
-        });
-        
-        input.addEventListener('input', () => {
-          let color = input.value;
-          if (color && !color.startsWith('#')) {
-            color = '#' + color;
-          }
-          
-          if (isValidHex(color)) {
-            colorPicker.value = color;
-            preview.style.backgroundColor = color;
-            input.classList.remove('border-red-500');
-          } else {
-            input.classList.add('border-red-500');
-          }
-        });
-        
-        container.appendChild(preview);
-        container.appendChild(colorPicker);
-        container.appendChild(input);
-        wrapper.append(label, container);
-        form.appendChild(wrapper);
-        return;
-      }
-      else {
-        input = document.createElement('input');
-        input.type = f.type;
-      }
-
-      input.id = f.name;
-      input.name = f.name;
-      input.value = f.value || '';
-      input.placeholder = f.label;
-      input.className = 'border rounded-2xl p-2 focus:outline-none focus:ring-2 focus:ring-teal-400';
-      if (f.required) input.required = true;
-
-      wrapper.append(label, input);
-      form.appendChild(wrapper);
-    });
-
-    // Get form values
-    function getFormValues() {
-      const values = {};
-      fields.forEach(field => {
-        values[field.name] = document.getElementById(field.name).value;
-      });
-      return values;
-    }
-
-    // Generate meta tags
-    function generateMetaTags() {
-      const m = getFormValues();
-
-      return `<!-- Primary Meta Tags -->
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>${m.title}</title>
-<meta name="title" content="${m.title}" />
-<meta name="description" content="${m.description}" />
-<meta name="author" content="${m.author}" />
-<meta name="keywords" content="${m.keywords}" />
-<meta name="robots" content="${m.robots}" />
-<link rel="canonical" href="${m.canonical}" />
-
-<!-- Theme & Icons -->
-<meta name="theme-color" content="${m.themeColor}" />
-<meta name="msapplication-TileColor" content="${m.tileColor}" />
-<link rel="icon" href="${m.favicon}" />
-
-<!-- Open Graph -->
-<meta property="og:type" content="${m.ogType}" />
-<meta property="og:url" content="${m.ogUrl}" />
-<meta property="og:title" content="${m.ogTitle || m.title}" />
-<meta property="og:description" content="${m.ogDescription || m.description}" />
-<meta property="og:image" content="${m.ogImage}" />
-<meta property="og:site_name" content="${m.siteName}" />
-
-<!-- Twitter -->
-<meta name="twitter:card" content="${m.twitterCard}" />
-<meta name="twitter:title" content="${m.ogTitle || m.title}" />
-<meta name="twitter:description" content="${m.ogDescription || m.description}" />
-<meta name="twitter:image" content="${m.twitterImage || m.ogImage}" />`;
-    }
-
-    // Update previews
-    function updatePreviews() {
-      const m = getFormValues();
-      
-      // Update social preview
-      document.getElementById('previewTitle').textContent = m.ogTitle || m.title || 'Your Page Title';
-      document.getElementById('previewDescription').textContent = m.ogDescription || m.description || 'This is where your page description will appear in social media previews.';
-      
-      try {
-        const url = new URL(m.ogUrl || m.canonical || '');
-        document.getElementById('previewDomain').textContent = url.hostname;
-      } catch (e) {
-        document.getElementById('previewDomain').textContent = 'example.com';
-      }
-      
-      if (m.ogImage) {
-        document.getElementById('previewImage').innerHTML = `<img src="${m.ogImage}" alt="Preview" class="w-full h-full object-cover">`;
-      } else {
-        document.getElementById('previewImage').innerHTML = '<i class="fas fa-image text-4xl text-gray-400"></i>';
-      }
-      
-      // Update search preview
-      document.getElementById('searchTitle').textContent = m.title || 'Your Page Title';
-      document.getElementById('searchDescription').textContent = m.description || 'This is where your page description will appear in search engine results.';
-      
-      try {
-        const url = new URL(m.canonical || '');
-        document.getElementById('searchUrl').textContent = url.href;
-      } catch (e) {
-        document.getElementById('searchUrl').textContent = 'https://codefrydev.in/metatag/';
-      }
-      
-      if (m.favicon) {
-        document.getElementById('searchFavicon').innerHTML = `<img src="${m.favicon}" alt="Favicon" class="w-full h-full object-contain">`;
-      } else {
-        document.getElementById('searchFavicon').innerHTML = '<i class="fas fa-globe text-gray-400"></i>';
-      }
-      
-      // Set current date
-      const now = new Date();
-      document.getElementById('searchDate').textContent = now.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
-    }
-
-    // Tab switching
-    function switchTab(tabId) {
-      // Hide all tab contents
-      document.querySelectorAll('.tab-content').forEach(tab => {
-        tab.classList.add('hidden');
-      });
-      
-      // Remove active class from all tabs
-      document.querySelectorAll('.tab-button').forEach(button => {
-        button.classList.remove('active');
-      });
-      
-      // Show selected tab content and mark button as active
-      document.getElementById(tabId).classList.remove('hidden');
-      document.querySelector(`button[id="${tabId.replace('Output', 'Tab')}"]`).classList.add('active');
-    }
-
-    // Wire up tab buttons
-    document.getElementById('codeTab').addEventListener('click', () => switchTab('codeOutput'));
-    document.getElementById('previewTab').addEventListener('click', () => {
-      switchTab('previewOutput');
-      updatePreviews();
-    });
-    document.getElementById('searchTab').addEventListener('click', () => {
-      switchTab('searchOutput');
-      updatePreviews();
-    });
-    document.getElementById('extractorTab').addEventListener('click', () => switchTab('extractorOutput'));
-
-    // Generate button
-    document.getElementById('generateBtn').addEventListener('click', () => {
-      const tags = generateMetaTags();
-      const out = document.getElementById('output');
-      out.textContent = tags;
-      out.scrollIntoView({ behavior: 'smooth' });
-      updatePreviews();
-      switchTab('codeOutput');
-    });
-
-    // Copy button
-    document.getElementById('copyBtn').addEventListener('click', () => {
-      const tags = document.getElementById('output').textContent;
-      navigator.clipboard.writeText(tags);
-      
-      // Show notification
-      const notification = document.getElementById('copyNotification');
-      notification.classList.add('show');
-      setTimeout(() => {
-        notification.classList.remove('show');
-      }, 2000);
-    });
-
-    // Reset button
-    document.getElementById('resetBtn').addEventListener('click', () => {
-      fields.forEach(field => {
-        const element = document.getElementById(field.name);
-        if (element) element.value = field.value || '';
-      });
-      document.getElementById('output').textContent = '';
-    });
-
-    // Meta Data Extractor functionality
-    document.getElementById('extractBtn').addEventListener('click', async () => {
-      const urlInput = document.getElementById('extractUrl').value.trim();
-      
-      if (!urlInput) {
-        showExtractorError('Please enter a website URL');
-        return;
-      }
-      
-      // Validate URL
-      let url;
-      try {
-        url = new URL(urlInput);
-      } catch (e) {
-        showExtractorError('Please enter a valid URL (e.g., https://example.com)');
-        return;
-      }
-      
-      // Show loading state
-      document.getElementById('extractorPlaceholder').classList.add('hidden');
-      document.getElementById('extractorContent').classList.add('hidden');
-      document.getElementById('extractorError').classList.add('hidden');
-      document.getElementById('extractorLoading').classList.remove('hidden');
-      
-      try {
-        // Use a proxy to bypass CORS restrictions
-        const proxyUrl = `https://api.allorigins.win/get?url=${encodeURIComponent(url.href)}`;
-        
-        const response = await fetch(proxyUrl);
-        if (!response.ok) {
-          throw new Error(`Failed to fetch website: ${response.status}`);
-        }
-        
-        const data = await response.json();
-        const htmlContent = data.contents;
-        
-        // Parse the HTML content
-        const parser = new DOMParser();
-        const doc = parser.parseFromString(htmlContent, 'text/html');
-        
-        // Extract meta tags
-        const metaTags = Array.from(doc.querySelectorAll('meta'));
-        
-        // Update UI with extracted data
-        document.getElementById('extractedUrl').textContent = url.href;
-        
-        const tagsContainer = document.getElementById('extractedTags');
-        tagsContainer.innerHTML = '';
-        
-        // Add title tag
-        const title = doc.querySelector('title')?.textContent || 'No title found';
-        tagsContainer.innerHTML += `
-          <tr>
-            <td><span class="tag-badge">title</span></td>
-            <td>${title}</td>
-          </tr>
-        `;
-        
-        // Add meta tags
-        metaTags.forEach(tag => {
-          const name = tag.getAttribute('name') || tag.getAttribute('property') || tag.getAttribute('itemprop') || 'unnamed';
-          const content = tag.getAttribute('content') || '';
-          
-          tagsContainer.innerHTML += `
-            <tr>
-              <td><span class="tag-badge">${name}</span></td>
-              <td>${content}</td>
-            </tr>
-          `;
-        });
-        
-        // Extract preview data
-        const ogTitle = doc.querySelector('meta[property="og:title"]')?.getAttribute('content') || title;
-        const ogDescription = doc.querySelector('meta[property="og:description"]')?.getAttribute('content') || 
-                             doc.querySelector('meta[name="description"]')?.getAttribute('content') || 
-                             'No description available';
-        const ogImage = doc.querySelector('meta[property="og:image"]')?.getAttribute('content') || 
-                       doc.querySelector('meta[name="twitter:image"]')?.getAttribute('content') || 
-                       '';
-        
-        // Update preview UI
-        document.getElementById('extractedPreviewTitle').textContent = ogTitle;
-        document.getElementById('extractedPreviewDescription').textContent = ogDescription;
-        document.getElementById('extractedPreviewDomain').textContent = url.hostname;
-        
-        if (ogImage) {
-          document.getElementById('extractedPreviewImage').innerHTML = `<img src="${ogImage}" alt="Preview" class="w-full h-full object-cover">`;
-        } else {
-          document.getElementById('extractedPreviewImage').innerHTML = '<i class="fas fa-image text-4xl text-gray-400"></i>';
-        }
-        
-        // Update Twitter preview
-        const twitterTitle = doc.querySelector('meta[name="twitter:title"]')?.getAttribute('content') || ogTitle;
-        const twitterDescription = doc.querySelector('meta[name="twitter:description"]')?.getAttribute('content') || ogDescription;
-        const twitterImage = doc.querySelector('meta[name="twitter:image"]')?.getAttribute('content') || ogImage;
-        
-        document.getElementById('extractedTwitterTitle').textContent = twitterTitle;
-        document.getElementById('extractedTwitterDescription').textContent = twitterDescription;
-        document.getElementById('extractedTwitterDomain').textContent = url.hostname;
-        
-        if (twitterImage) {
-          document.getElementById('extractedTwitterImage').innerHTML = `<img src="${twitterImage}" alt="Twitter Preview" class="w-full h-full object-cover">`;
-        } else {
-          document.getElementById('extractedTwitterImage').innerHTML = '<i class="fas fa-image text-4xl text-gray-400"></i>';
-        }
-
-        // --- Fill form fields with extracted meta data ---
-        const metaMap = {
-          title: doc.querySelector('title')?.textContent || '',
-          description: doc.querySelector('meta[name="description"]')?.getAttribute('content') || '',
-          author: doc.querySelector('meta[name="author"]')?.getAttribute('content') || '',
-          keywords: doc.querySelector('meta[name="keywords"]')?.getAttribute('content') || '',
-          canonical: doc.querySelector('link[rel="canonical"]')?.getAttribute('href') || url.href,
-          robots: doc.querySelector('meta[name="robots"]')?.getAttribute('content') || '',
-          themeColor: doc.querySelector('meta[name="theme-color"]')?.getAttribute('content') || '',
-          tileColor: doc.querySelector('meta[name="msapplication-TileColor"]')?.getAttribute('content') || '',
-          favicon: doc.querySelector('link[rel="icon"]')?.getAttribute('href') || '',
-          ogType: doc.querySelector('meta[property="og:type"]')?.getAttribute('content') || '',
-          ogUrl: doc.querySelector('meta[property="og:url"]')?.getAttribute('content') || url.href,
-          ogTitle: doc.querySelector('meta[property="og:title"]')?.getAttribute('content') || '',
-          ogDescription: doc.querySelector('meta[property="og:description"]')?.getAttribute('content') || '',
-          ogImage: doc.querySelector('meta[property="og:image"]')?.getAttribute('content') || '',
-          twitterCard: doc.querySelector('meta[name="twitter:card"]')?.getAttribute('content') || '',
-          twitterImage: doc.querySelector('meta[name="twitter:image"]')?.getAttribute('content') || '',
-          siteName: doc.querySelector('meta[property="og:site_name"]')?.getAttribute('content') || ''
-        };
-        fields.forEach(field => {
-          const el = document.getElementById(field.name);
-          if (el && metaMap[field.name] !== undefined && metaMap[field.name] !== '') {
-            el.value = metaMap[field.name];
-            // For color fields, trigger input event to sync color picker and preview
-            if (field.type === 'color') {
-              el.dispatchEvent(new Event('input'));
-            }
-          }
-        });
-        updatePreviews();
-        document.getElementById('output').textContent = generateMetaTags();
-        // --- end fill form fields ---
-
-        // Show results
-        document.getElementById('extractorLoading').classList.add('hidden');
-        document.getElementById('extractorContent').classList.remove('hidden');
-      } catch (error) {
-        showExtractorError(`Error extracting meta tags: ${error.message}`);
-      }
-    });
-    
-    function showExtractorError(message) {
-      document.getElementById('extractorLoading').classList.add('hidden');
-      document.getElementById('extractorContent').classList.add('hidden');
-      document.getElementById('extractorPlaceholder').classList.add('hidden');
-      
-      const errorElement = document.getElementById('extractorError');
-      document.getElementById('errorMessage').textContent = message;
-      errorElement.classList.remove('hidden');
-    }
-
-    // Tab switching for extracted data
-    document.querySelectorAll('.extracted-tab').forEach(tab => {
-      tab.addEventListener('click', () => {
-        // Remove active class from all tabs
-        document.querySelectorAll('.extracted-tab').forEach(t => {
-          t.classList.remove('active');
-        });
-        
-        // Add active class to clicked tab
-        tab.classList.add('active');
-        
-        // Hide all tab contents
-        document.querySelectorAll('.extracted-tab-content').forEach(content => {
-          content.classList.remove('active');
-        });
-        
-        // Show the corresponding content
-        const tabName = tab.getAttribute('data-tab');
-        document.getElementById(`extracted${tabName.charAt(0).toUpperCase() + tabName.slice(1)}Tab`).classList.add('active');
-      });
-    });
-
-    // Initialize previews
-    updatePreviews();
-    
-    // Initialize the extractor tab
-    document.getElementById('extractUrl').value = window.location.href;
-  </script>
+  <script src="js/main.js" defer></script>
 </body>
 </html>

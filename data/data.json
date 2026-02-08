@@ -1,0 +1,70 @@
+{
+  "ui": {
+    "pageTitle": "Meta Tag Generator & Extractor",
+    "tagline": "Create, preview, and extract essential meta tags for SEO and social media sharing. Perfect for developers and marketers to optimize web pages.",
+    "generatorSettings": "Generator Settings",
+    "preview": "Preview",
+    "tabs": {
+      "code": "Code",
+      "socialPreview": "Social Preview",
+      "searchResult": "Search Result",
+      "metaDataExtractor": "Meta Data Extractor"
+    },
+    "buttons": {
+      "generateMetaTags": "Generate Meta Tags",
+      "resetForm": "Reset Form",
+      "extract": "Extract",
+      "copy": "Copy"
+    },
+    "placeholders": {
+      "extractUrl": "Enter website URL (e.g., https://codefrydev.in)",
+      "hexColor": "Hex color (#RRGGBB)"
+    },
+    "copyNotification": "Meta tags copied to clipboard!",
+    "extractorPlaceholder": "Enter a website URL and click \"Extract\" to analyze its meta tags",
+    "extractorLoading": "Analyzing website meta tags...",
+    "extractedTags": "Extracted Tags",
+    "socialPreviewTab": "Social Preview",
+    "extractedMetaTagsHeading": "Extracted Meta Tags",
+    "websiteUrl": "Website URL:",
+    "tablePropertyName": "Property/Name",
+    "tableContent": "Content",
+    "socialMediaPreviewHeading": "Social Media Preview",
+    "facebookPreview": "Facebook Preview",
+    "twitterPreview": "Twitter Preview",
+    "fallbacks": {
+      "yourPageTitle": "Your Page Title",
+      "exampleDomain": "example.com",
+      "socialPreviewDescription": "This is where your page description will appear in social media previews.",
+      "searchPreviewDescription": "This is where your page description will appear in search engine results. It should be concise and informative, containing your primary keywords.",
+      "defaultSearchUrl": "https://codefrydev.in/metatag",
+      "pageTitlePlaceholder": "Page description will appear here.",
+      "noTitleFound": "No title found",
+      "noDescriptionAvailable": "No description available"
+    }
+  },
+  "errors": {
+    "enterUrl": "Please enter a website URL",
+    "invalidUrl": "Please enter a valid URL (e.g., https://codefrydev.in)",
+    "extractFailed": "Error extracting meta tags: {message}"
+  },
+  "formFields": [
+    { "label": "Page Title", "name": "title", "type": "text", "value": "Codefrydev Meta Tag Generator", "required": true },
+    { "label": "Description", "name": "description", "type": "textarea", "value": "This is a description of my amazing website that will appear in search results.", "required": true },
+    { "label": "Author", "name": "author", "type": "text", "value": "Codefrydev" },
+    { "label": "Keywords", "name": "keywords", "type": "text", "value": "website, business, portfolio" },
+    { "label": "Canonical URL", "name": "canonical", "type": "text", "value": "@currentUrl" },
+    { "label": "Robots", "name": "robots", "type": "text", "value": "index, follow" },
+    { "label": "Theme Color", "name": "themeColor", "type": "color", "value": "#0ea5e9" },
+    { "label": "Tile Color", "name": "tileColor", "type": "color", "value": "#0ea5e9" },
+    { "label": "Favicon URL", "name": "favicon", "type": "text", "value": "https://codefrydev.in/favicon-32x32.png" },
+    { "label": "OG Type", "name": "ogType", "type": "text", "value": "website" },
+    { "label": "OG URL", "name": "ogUrl", "type": "text", "value": "@currentUrl" },
+    { "label": "OG Title", "name": "ogTitle", "type": "text", "value": "" },
+    { "label": "OG Description", "name": "ogDescription", "type": "textarea", "value": "" },
+    { "label": "OG Image URL", "name": "ogImage", "type": "text", "value": "https://codefrydev.in/favicon-32x32.png" },
+    { "label": "Twitter Card", "name": "twitterCard", "type": "text", "value": "summary_large_image" },
+    { "label": "Twitter Image URL", "name": "twitterImage", "type": "text", "value": "https://codefrydev.in/favicon-32x32.png" },
+    { "label": "Site Name", "name": "siteName", "type": "text", "value": "Codefrydev Website" }
+  ]
+}
